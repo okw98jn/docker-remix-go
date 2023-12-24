@@ -9,6 +9,7 @@ services:
         command: sh -c "npm install && npm run dev"
         ports:
             - "3000:3000"
+            - "3001:3001"
 
     go:
         container_name: go

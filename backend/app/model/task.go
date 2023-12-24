@@ -15,3 +15,7 @@ type Task struct {
 	UpdatedAt time.Time      `json:"updated_at" gorm:"comment:更新日時"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"comment:論理削除日時"`
 }
+
+type TaskResponse struct {
+	Id uint `json:"id"`
+}

@@ -1,9 +1,9 @@
-import { FC, memo } from "react"
+import { FC } from "react"
 import styles from '../styles/header.module.css'
 import { Link } from "@remix-run/react";
 
 const LogoLink = <Link to={'/admin'}><h2 className="text-xl font-medium">Remix</h2></Link>;
-const Header: FC = memo(() => {
+const Header: FC = () => {
     return (
         <header className={styles.header}>
             <div>
@@ -18,6 +18,6 @@ const Header: FC = memo(() => {
             </div>
         </header >
     )
-})
+}
 
 export default Header

@@ -8,7 +8,7 @@ type Props = {
 
 const Input: FC<Props> = ({ type, name }) => {
     return (
-        <input type={type} id={name} name={name} className={css({ w: 'full', p: '2', border: 'solid 1px', borderColor: 'gray.200', borderRadius: 'sm' })} />
+        <input type={type} id={name} name={name} autoComplete="on" className={css({ w: 'full', p: '2', border: 'solid 1px', borderColor: 'gray.200', borderRadius: 'sm' })} />
     );
 }
 

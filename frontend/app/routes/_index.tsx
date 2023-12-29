@@ -1,15 +1,20 @@
-import type { MetaFunction } from "@remix-run/node";
-import { css } from "../../styled-system/css";
+import { type MetaFunction } from "@remix-run/node";
+import { useNavigate } from "@remix-run/react";
+import { useEffect } from "react";
 
 export const meta: MetaFunction = () => {
 	return [
-		{ title: "New Remix App" },
+		{ title: "Remix Auth" },
 		{ name: "description", content: "Welcome to Remix!" },
 	];
 };
 
 export default function Index() {
+	const navigate = useNavigate();
+	useEffect(() => {
+		navigate("/login");
+	}, []);
 	return (
-		<div className={css({ fontSize: "2xl", fontWeight: 'bold' })}>Hello 🐼!</div>
+		<div>index</div>
 	);
 }

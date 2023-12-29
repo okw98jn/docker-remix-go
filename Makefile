@@ -30,6 +30,10 @@ sh-mysql:
 migrate:
 	docker compose exec go go run migrate/migrate.go
 
+# go mod tidy
+tidy:
+	docker compose exec go go mod tidy
+
 # npm install
 npm-i:
 	docker compose exec remix npm install

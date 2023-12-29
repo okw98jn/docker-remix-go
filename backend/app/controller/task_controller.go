@@ -8,7 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type TaskControllerInterface interface {
+type ITaskController interface {
 	CreateTask(c echo.Context) error
 }
 
@@ -16,7 +16,7 @@ type taskController struct {
 	tu usecase.TaskUsecaseInterface
 }
 
-func NewTaskController(tu usecase.TaskUsecaseInterface) TaskControllerInterface {
+func NewTaskController(tu usecase.TaskUsecaseInterface) ITaskController {
 	return &taskController{tu}
 }
 

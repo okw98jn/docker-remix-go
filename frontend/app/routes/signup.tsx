@@ -1,27 +1,34 @@
-import { Form } from "@remix-run/react";
-import { ActionFunction } from "@remix-run/server-runtime";
+import { ActionFunction, json } from "@remix-run/server-runtime";
+import { ValidatedForm, validationError } from "remix-validated-form";
 import Box from "../components/auth/Box";
 import Title from "../components/auth/Title";
 import Label from "../components/auth/Label";
 import Input from "../components/auth/Input";
 import Button from "../components/auth/Button";
 import ItemBox from "../components/auth/ItemBox";
+import { signUpValidator } from "../validator/signup/signUpValidator";
 
 export const action: ActionFunction = async ({ request }) => {
-	const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
     await new Promise(resolve => setTimeout(resolve, 500));
-	return {
-		title: 'Sign in',
-	};
+    const formData = await signUpValidator.validate(
+        await request.formData()
+    );
+    if (formData.error) {
+        return validationError(formData.error);
+    }
+    const { email, password } = formData.data;
+    return json({ email, password });
 }
 
 export default function SignUp() {
     return (
         <Box>
             <Title title={'Sign up'} subTitle="ログイン" path={'/login'} />
-            <Form method="post">
+            <ValidatedForm
+                validator={signUpValidator}
+                action="/signup"
+                method="post"
+            >
                 <ItemBox>
                     <Label name="email" label="メールアドレス" />
                     <Input type="text" name="email" />
@@ -33,7 +40,7 @@ export default function SignUp() {
                 <ItemBox>
                     <Button text={'新規登録'} />
                 </ItemBox>
-            </Form>
+            </ValidatedForm>
         </Box>
     );
 }

@@ -13,7 +13,7 @@ export const button = cva({
     variants: {
         type: {
             normal: { bg: 'blue.500', color: 'white', cursor: 'pointer', _hover: { opacity: '0.8' } },
-            loading: { bg: "#888888a9", color: "#ffffff" },
+            loading: { bg: "#888888a9", color: "#ffffff", cursor: "not-allowed" },
         },
     },
 });
@@ -21,10 +21,11 @@ export const button = cva({
 const Button: FC<Props> = ({ text }) => {
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    const btnStyle = isSubmitting ? button({ type: "loading" }) : button({ type: "normal" });
+    const btnType = isSubmitting ? "loading" : "normal";
+    
     return (
         <button type="submit"
-            className={btnStyle}
+            className={button({ type: btnType })}
             disabled={isSubmitting}
         >
             {isSubmitting ? '送信中...' : text}

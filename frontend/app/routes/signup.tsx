@@ -7,6 +7,7 @@ import Input from "../components/auth/Input";
 import Button from "../components/auth/Button";
 import ItemBox from "../components/auth/ItemBox";
 import { signUpValidator } from "../validator/signup/signUpValidator";
+import { createUser } from "../model/signUp";
 
 export const action: ActionFunction = async ({ request }) => {
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -16,8 +17,9 @@ export const action: ActionFunction = async ({ request }) => {
     if (formData.error) {
         return validationError(formData.error);
     }
-    const { email, password } = formData.data;
-    return json({ email, password });
+    
+    const user = await createUser(formData.data);
+    return json({ user });
 }
 
 export default function SignUp() {

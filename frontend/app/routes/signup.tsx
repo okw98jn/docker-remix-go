@@ -17,7 +17,7 @@ export const action: ActionFunction = async ({ request }) => {
     if (formData.error) {
         return validationError(formData.error);
     }
-    
+
     const user = await createUser(formData.data);
     return json({ user });
 }

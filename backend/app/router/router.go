@@ -2,7 +2,7 @@ package router
 
 import (
 	"app/controller"
-	"net/http"
+	// "net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
@@ -18,15 +18,16 @@ func NewRouter(uc controller.IUserController, tc controller.ITaskController) *ec
 		AllowMethods:     []string{"GET", "PUT", "POST", "DELETE"},
 		AllowCredentials: true,
 	}))
-	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-		CookiePath:     "/",
-		CookieDomain:   os.Getenv("API_DOMAIN"),
-		CookieHTTPOnly: true,
-		// CookieSameSite: http.SameSiteNoneMode,
-		CookieSameSite: http.SameSiteDefaultMode,
-		//CookieMaxAge:   60,
-	}))
+	// e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+	// 	CookiePath:     "/",
+	// 	CookieDomain:   os.Getenv("API_DOMAIN"),
+	// 	CookieHTTPOnly: true,
+	// 	// CookieSameSite: http.SameSiteNoneMode,
+	// 	CookieSameSite: http.SameSiteDefaultMode,
+	// 	//CookieMaxAge:   60,
+	// }))
 	e.POST("/signup", uc.SignUp)
+	e.POST("/email_check", uc.IsDuplicatedEmail)
 	e.POST("/login", uc.LogIn)
 	e.POST("/logout", uc.LogOut)
 	e.GET("/csrf", uc.CsrfToken)

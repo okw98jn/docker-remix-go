@@ -13,6 +13,7 @@ import (
 type IUserUsecase interface {
 	SignUp(user model.User) (model.UserResponse, error)
 	Login(user model.User) (string, error)
+	IsDuplicatedEmail(email string) bool
 }
 
 type userUsecase struct {
@@ -57,4 +58,12 @@ func (uu *userUsecase) Login(user model.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+func (uu *userUsecase) IsDuplicatedEmail(email string) bool {
+	user := model.User{}
+	if err := uu.ur.GetUserByEmail(&user, email); err != nil {
+		return false
+	}
+	return true
 }

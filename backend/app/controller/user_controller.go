@@ -14,6 +14,7 @@ type IUserController interface {
 	SignUp(c echo.Context) error
 	LogIn(c echo.Context) error
 	LogOut(c echo.Context) error
+	IsDuplicatedEmail(c echo.Context) error
 	CsrfToken(c echo.Context) error
 }
 
@@ -71,6 +72,18 @@ func (uc *userController) LogOut(c echo.Context) error {
 	cookie.SameSite = http.SameSiteNoneMode
 	c.SetCookie(cookie)
 	return c.NoContent(http.StatusOK)
+}
+
+func (uc *userController) IsDuplicatedEmail(c echo.Context) error {
+	user := model.UserEmail{}
+	if err := c.Bind(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	email := user.Email
+	isDuplicated := uc.uu.IsDuplicatedEmail(email)
+	return c.JSON(http.StatusOK, echo.Map{
+		"is_duplicated": isDuplicated,
+	})
 }
 
 func (uc *userController) CsrfToken(c echo.Context) error {

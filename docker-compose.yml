@@ -1,17 +1,17 @@
 version: "3"
 services:
-    remix:
-        container_name: remix
-        build: ./docker/remix
-        tty: true
-        volumes:
-            - ./frontend:/app
-        command: sh -c "npm install && npm run dev"
-        ports:
-            - "3000:3000"
-            - "3001:3001"
-        networks:
-            - golang_network
+    # remix:
+    #     container_name: remix
+    #     build: ./docker/remix
+    #     tty: true
+    #     volumes:
+    #         - ./frontend:/app
+    #     command: sh -c "npm install && npm run dev"
+    #     ports:
+    #         - "3000:3000"
+    #         - "3001:3001"
+    #     networks:
+    #         - golang_network
 
     go:
         container_name: go

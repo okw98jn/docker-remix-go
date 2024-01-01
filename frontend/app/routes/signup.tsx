@@ -13,7 +13,7 @@ import { signUpValidator } from "../validator/signup/signUpValidator";
 import { createUser } from "../model/signUp";
 import { authenticator } from "../services/auth.server";
 import { commitSession, getSession } from "../services/session.server";
-import { css } from "../../styled-system/css";
+import ErrorMessage from "../components/auth/ErrorMessage";
 
 export const action: ActionFunction = async ({ request }) => {
 
@@ -80,7 +80,7 @@ export default function SignUp() {
                     <Label name="password" label="パスワード" />
                     <Input type="password" name="password" />
                 </ItemBox>
-                {errorMessage && <p className={css({ color: 'red.500', fontSize: 'sm', marginBottom: '15px', fontWeight: 'bold' })}>{errorMessage}</p>}
+                {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
                 <ItemBox>
                     <Button text={'新規登録'} />
                 </ItemBox>

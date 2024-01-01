@@ -4,6 +4,7 @@ import { checkEmailDuplication } from "../../model/signUp";
 
 export const signUpValidator = withZod(
     z.object({
+        name: z.string().min(1, { message: "名前を入力してください" }),
         email: z
             .string()
             .min(1, { message: "メールアドレスを入力してください" })

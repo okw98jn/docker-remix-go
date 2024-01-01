@@ -2,7 +2,6 @@ package repository
 
 import (
 	"app/model"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -21,7 +20,6 @@ func NewUserRepository(db *gorm.DB) IUserRepository {
 }
 
 func (ur *userRepository) GetUserByEmail(user *model.User, email string) error {
-	fmt.Println("email: ", email)
 	if err := ur.db.Where("email=?", email).First(user).Error; err != nil {
 		return err
 	}

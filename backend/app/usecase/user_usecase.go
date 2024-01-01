@@ -11,7 +11,7 @@ import (
 )
 
 type IUserUsecase interface {
-	SignUp(user model.User) (model.UserResponse, error)
+	SignUp(user model.User) (model.UserLoginResponse, error)
 	Login(user model.User) (string, error)
 	IsDuplicatedEmail(email string) bool
 }
@@ -24,18 +24,17 @@ func NewUserUsecase(ur repository.IUserRepository) IUserUsecase {
 	return &userUsecase{ur}
 }
 
-func (uu *userUsecase) SignUp(user model.User) (model.UserResponse, error) {
+func (uu *userUsecase) SignUp(user model.User) (model.UserLoginResponse, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
 	if err != nil {
-		return model.UserResponse{}, err
+		return model.UserLoginResponse{}, err
 	}
-	newUser := model.User{Email: user.Email, Password: string(hash)}
+	newUser := model.User{Name: user.Name, Email: user.Email, Password: string(hash)}
 	if err := uu.ur.CreateUser(&newUser); err != nil {
-		return model.UserResponse{}, err
+		return model.UserLoginResponse{}, err
 	}
-	resUser := model.UserResponse{
-		ID:    newUser.ID,
-		Email: newUser.Email,
+	resUser := model.UserLoginResponse{
+		ID: newUser.ID,
 	}
 	return resUser, nil
 }

@@ -1,6 +1,6 @@
-import { type MetaFunction } from "@remix-run/node";
-import { useNavigate } from "@remix-run/react";
-import { useEffect } from "react";
+import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import Login from "./login";
+import { authenticator } from "../services/auth.server";
 
 export const meta: MetaFunction = () => {
 	return [
@@ -9,12 +9,15 @@ export const meta: MetaFunction = () => {
 	];
 };
 
+export async function loader({ request }: LoaderFunctionArgs) {
+    // ログイン済みの場合はタスク一覧にリダイレクト
+    return await authenticator.isAuthenticated(request, {
+        successRedirect: "/tasks",
+    });
+}
+
 export default function Index() {
-	const navigate = useNavigate();
-	useEffect(() => {
-		navigate("/login");
-	}, []);
 	return (
-		<div>index</div>
+		<Login />
 	);
 }
